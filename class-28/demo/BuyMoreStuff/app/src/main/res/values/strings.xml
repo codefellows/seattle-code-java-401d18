@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BuyMoreStuff</string>
+    <string name="product_name">Product Name</string>
+    <string name="submitted">Yay it submitted correctly!</string>
+    <string name="put_a_product_name_here">Put a product name here</string>
+    <string name="submit">Submit</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="now_ordering">Now Ordering!</string>
+    <string name="order">Order</string>
+    <string name="no_product_name">No product name specified!</string>
+    <string name="nickname">Nickname</string>
+    <string name="user_settings">User Settings</string>
+    <string name="your_nickname_goes_here">Your nickname goes here</string>
+    <string name="save">Save</string>
+    <string name="nickname_with_input">Nickname: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,43 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateProduct(
+  $input: CreateProductInput!
+  $condition: ModelProductConditionInput
+) {
+  createProduct(input: $input, condition: $condition) {
+    id
+    name
+    description
+    dateCreated
+    productCategory
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateProduct(
+  $input: UpdateProductInput!
+  $condition: ModelProductConditionInput
+) {
+  updateProduct(input: $input, condition: $condition) {
+    id
+    name
+    description
+    dateCreated
+    productCategory
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteProduct(
+  $input: DeleteProductInput!
+  $condition: ModelProductConditionInput
+) {
+  deleteProduct(input: $input, condition: $condition) {
+    id
+    name
+    description
+    dateCreated
+    productCategory
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "869347793005",
+    "firebase_url": "https://cheapthings-66afe.firebaseio.com",
+    "project_id": "cheapthings-66afe",
+    "storage_bucket": "cheapthings-66afe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869347793005:android:a633837beb84f155bc8764",
+        "android_client_info": {
+          "package_name": "com.ncarignan.buycheapthings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869347793005-4hm62g6i339994iqvd0hgrr42s6jkg8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnhe6UjyabBvbiC7aMvcOgb8xwfEzJMWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869347793005-4hm62g6i339994iqvd0hgrr42s6jkg8v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

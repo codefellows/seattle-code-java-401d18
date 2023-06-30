@@ -1,0 +1,22 @@
+# This is the ONLY source of truth for your data model
+# After you change this, do these steps:
+# 1. On the command line, type "amplify codegen models"
+# 2. "amplify api update" -> Disable conflict detection
+# You need to do #2 to get rid of evil "version" field in DynamoDb that won't let you update your object!
+# 3. "amplify push"
+
+type Product @model @auth(rules: [{allow: public}]){
+  id: ID!
+  name: String!
+  description: String
+  dateCreated: AWSDateTime
+  productCategory: ProductCategoryEnum
+}
+
+enum ProductCategoryEnum {
+  Clothes
+  Electronics
+  Perishable_Goods
+  Office_Supplies
+  Misc
+}

@@ -1,0 +1,35 @@
+{
+    "api": {
+        "cheapthings": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "apiKeyExpirationDays": 28,
+                            "description": "cheapthingkey"
+                        }
+                    },
+                    "additionalAuthenticationProviders": []
+                }
+            }
+        }
+    },
+    "auth": {
+        "cognito4fcbd588": {
+            "service": "Cognito",
+            "serviceType": "managed",
+            "providerPlugin": "awscloudformation"
+        }
+    },
+    "notifications": {
+        "cheapthingsqiZsj": {
+            "service": "Pinpoint",
+            "channels": [
+                "FCM"
+            ]
+        }
+    }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/productListConstraintLayout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#FFFFFF"
+  tools:context=".activity.ProductListActivity">
+
+  <ImageView
+    android:id="@+id/userSettingsImageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:contentDescription="@string/settings_icon"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@android:drawable/ic_menu_manage"
+    tools:ignore="ImageContrastCheck" />
+
+  <TextView
+    android:id="@+id/productListNicknameTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="Nickname: nickname here" />
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/productListRecyclerView"
+    android:layout_width="318dp"
+    android:layout_height="136dp"
+    android:layout_marginStart="44dp"
+    android:layout_marginBottom="52dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <Button
+    android:id="@+id/addProductButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="26dp"
+    android:text="@string/add_product"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/productListNicknameTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
