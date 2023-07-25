@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<h1>Salmon Cookies!</h1>
+
+<!--stores come from our controller. GET method -->
+<ul th:each="salmonStore : ${stores}">
+  <!--notice the string we create within thymeleaf-->
+  <li th:text="'Store name ' + ${salmonStore.name}">store name</li>
+  <li th:text="'Average cookies per day ' + ${salmonStore.averageCookiesPerDay}"></li>
+  <!-- ADDS SMALL FORM TO INCORPORATE DELETE BUTTON FOR EACH STORE -->
+  <!-- NOTE: the salmonStore's id is concatenated to the end of the path to be unique for each... it is accessed in the controller via path variable -->
+  <form th:action="'/stores/delete/' + ${salmonStore.id}" th:method="delete">
+      <input type="submit" value="Delete Store">
+  </form>
+</ul>
+
+<!--return a single store from a GET method-->
+<li th:text="${storeName}">store name</li>
+<li th:text="${storeSales}">store sales</li>
+
+<!--form to create new stores-->
+<form action="/stores/add" method="POST">
+  <fieldset>
+    <legend>Add Salmon Cookies Store</legend>
+    <label>Store Name</label>
+    <input type="text" name="storeName">
+    <label>Average Cookies Per Day</label>
+    <input type="text" name="averageSoldPerDay">
+    <input type="submit" value="Add Store">
+  </fieldset>
+</form>
+
+<!--delete a store by id-->
+<!--<form th:action="'/cookie-store/' + ${salmonStore.id}" th:method="delete">-->
+</body>
+</html>
