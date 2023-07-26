@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Cookie Stand</title>
+</head>
+<body>
+    <main class="container">
+      <h1 th:text="${stand.name}">COOKIE STAND</h1>
+      <ul>
+          <li th:text="'Average cookies per day ' + ${stand.averageCookiesPerDay}"></li>
+          <!--  Lets show all the employees for each store-->
+          <div>Employees</div>
+          <ul th:each="employee : ${stand.employees}">
+              <li th:text="'name: ' + ${employee.name}"></li>
+              <li th:text="'pay: ' + ${employee.payPerHour}"></li>
+              <li th:text="'stand: ' + ${employee.stand.name}"></li>
+              <p>---------</p>
+          </ul>
+          <form action="/employee/add" method="POST">
+              <fieldset>
+                  <legend>Add employee to this store</legend>
+                  <label>Employee Name</label>
+                  <input type="text" name="name">
+                  <lable>Pay</lable>
+                  <input type="text" name="payPerHour">
+                  <input type="hidden" name="standName" th:value="${stand.name}">
+                  <input type="submit" value="add employee to stand">
+              </fieldset>
+          </form>
+      </ul>
+    </main>
+</body>
+</html>

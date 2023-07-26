@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookie Stands</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+<main class="container">
+<h1>Cookie Stands</h1>
+<ul th:each="stand : ${cookieStands}">
+    <li>
+    <a th:href="'/' + ${stand.id}" th:text="${stand.name}">stand name</a>
+    </li>
+</ul>
+
+
+
+
+<form action="/create" method="POST">
+    <fieldset>
+        <legend>Create Cookie Stand</legend>
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name">
+    <label for="average-cookies-per-sale">Average Cookies per Sale</label>
+    <input type="number" name="averageCookiesPerSale" id="average-cookies-per-sale">
+    <input type="submit" value="SAVE">
+    </fieldset>
+</form>
+
+</main>
+</body>
+</html>
