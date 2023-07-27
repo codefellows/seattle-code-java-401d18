@@ -1,7 +1,7 @@
 package com.recipesAuth.recipesAuth.controllers;
 
-import com.recipesAuth.recipesAuth.models.SiteUser;
-import com.recipesAuth.recipesAuth.repos.SiteUserRepository;
+//import com.recipesAuth.recipesAuth.models.SiteUser;
+//import com.recipesAuth.recipesAuth.repos.SiteUserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,31 +11,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RecipeController {
-  @Autowired
-  SiteUserRepository siteUserRepository;
 
-  @GetMapping("/recipe")
-  public String getRecipe(HttpServletRequest request, Model m) {
+  @GetMapping("/recipes")
+  public String getRecipes(HttpServletRequest request, Model model) {
+
     HttpSession session = request.getSession();
 
-
-    // using a method from session... make sure you gate this behind an if statement
     Object userNameAttribute = session.getAttribute("userName");
 
-    if (userNameAttribute == null) {
+    if(userNameAttribute == null) {
+      // special string to redirect
       return "redirect:/";
     }
 
     String userName = userNameAttribute.toString();
 
-    //authenticate our user
-    if(userName != null) {
-      m.addAttribute("userName", userName);
-      SiteUser siteUser = siteUserRepository.getSiteUserByUserName(userName);
-      // m.addAttribute() <--- add all of your recipes
-      return "recipes.html";
-    }
+    model.addAttribute("userName", userName);
 
-    return "redirect:/";
+    // probably want to add the recipe list here...
+
+    return "recipes.html";
   }
 }
