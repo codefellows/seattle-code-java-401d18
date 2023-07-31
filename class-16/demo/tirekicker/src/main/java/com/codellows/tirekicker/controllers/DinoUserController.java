@@ -40,7 +40,7 @@ public class DinoUserController {
     dinoUser.setPassword(encryptedPassword);
     dinoUserRepository.save(dinoUser);
     authWithHttpServletRequest(username, password);
-    return new RedirectView("/login");
+    return new RedirectView("/");
   }
 
   public void authWithHttpServletRequest(String username, String password) {
