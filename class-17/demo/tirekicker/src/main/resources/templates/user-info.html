@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <!--  Error Fragment: css stylesheet added to color error message text red -->
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <title>User Profile</title>
+</head>
+<body>
+<h3 th:if="${browsingUserUsername != null}" th:text="${'Current user: ' + browsingUserUsername + ' with nickname ' + browsingUserNickname}"></h3>
+
+<!--Error Fragment: fragment displayed when an authorized action is taken by a user on the user-info page -->
+<div th:replace="/fragments/error-fragment :: dino-error"></div>
+
+<h1 th:text="${'User info for user id: ' + dinoUserId}"></h1>
+
+<form th:action="${'/users/' + dinoUserId}" th:method="PUT">
+  <label for="username">Username</label>
+  <input th:value="${dinoUserUsername}" type="text" name="username" id="username" th:disabled="${!browsingUserUsername.equals(dinoUserUsername)}">
+  <label for="nickname">Nickname</label>
+  <input th:value="${dinoUserNickname}" type="text" name="nickname" id="nickname" th:disabled="${!browsingUserUsername.equals(dinoUserUsername)}">
+  <input type="submit" value="Edit User Info" th:hidden="${!browsingUserUsername.equals(dinoUserUsername)}">
+</form>
+
+<div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!-- Error Fragment: Error fragment shown when users take unauthorized actions-->
+<nav th:if="${errorMessage}" class="errorMessage" th:fragment="dino-error" th:text="'Error: ' + ${errorMessage}"></nav>
+</body>
+</html>
