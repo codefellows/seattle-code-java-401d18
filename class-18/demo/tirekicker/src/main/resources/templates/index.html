@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
+</head>
+<body>
+<main class="container">
+
+<h3 th:if="${username != null}" th:text="${'Current user: ' + username + ' with nickname ' + nickname}"></h3>
+<h1>Welcome to DinoBook, the best home for dinos on the internet!</h1>
+
+<a th:if="!${username}" href="/login">Log In</a>
+<br>
+<a th:if="!${username}" href="/signup">Or Sign Up</a>
+<a th:if="${username}" href="/logout">Log Out</a>
+</main>
+</body>
+</html>
