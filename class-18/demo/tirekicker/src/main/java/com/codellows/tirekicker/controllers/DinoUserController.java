@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.thymeleaf.spring6.processor.SpringInputCheckboxFieldTagProcessor;
 
 @Controller
 public class DinoUserController {
@@ -112,6 +113,9 @@ public class DinoUserController {
 
     m.addAttribute("testDate", LocalDateTime.now());
 
+    m.addAttribute("usersIFollow", dinoUser.getUsersIFollow());
+    m.addAttribute("userFollowingMe", dinoUser.getUsersWhoFollowMe());
+
     return "/user-info.html";
   }
 
@@ -126,6 +130,29 @@ public class DinoUserController {
     } else {
       redir.addFlashAttribute("errorMessage", "Cannot edit another user's page!");
     }
+
+    return new RedirectView("/users/" + id);
+  }
+
+  @PutMapping("/follow-user/{id}")
+  public RedirectView followUser(Principal p, @PathVariable Long id) {
+    // grab the user to follow from the repo using their id from the path
+    DinoUser userToFollow = dinoUserRepository.findById(id).orElseThrow(() -> new RuntimeException("Error reading " +
+      "user from the database with ID of: " + id));
+
+    // grab our currently logged in user
+    DinoUser browsingUser = dinoUserRepository.findByUsername(p.getName());
+
+    // check that the user isn't trying to follow themselves
+    if(browsingUser.getUsername().equals(userToFollow.getUsername())) {
+      throw new IllegalArgumentException("Following yourself is not allowed!");
+    }
+
+    // access followers from the browsingUser and update with the new user to follow
+    browsingUser.getUsersIFollow().add(userToFollow);
+
+    // save to the database
+    dinoUserRepository.save(browsingUser);
 
     return new RedirectView("/users/" + id);
   }

@@ -1,15 +1,15 @@
 package com.codellows.tirekicker.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.codellows.tirekicker.controllers.DinoUserController;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class DinoUser implements UserDetails {
@@ -20,6 +20,34 @@ public class DinoUser implements UserDetails {
 
   String username;
   String password;
+
+  // implement many to many!
+  @ManyToMany
+  @JoinTable (
+    name = "followers_to_followees",
+    joinColumns = {@JoinColumn(name = "userWhoIsFollowing")},
+    inverseJoinColumns = {@JoinColumn(name = "FollowedUser")}
+  ) // takes a name, first join column, and inverse join column
+  Set<DinoUser> usersIFollow = new HashSet<>();
+
+  @ManyToMany(mappedBy = "usersIFollow")
+  Set<DinoUser> usersWhoFollowMe = new HashSet<>();
+
+  public Set<DinoUser> getUsersIFollow() {
+    return usersIFollow;
+  }
+
+  public void setUsersIFollow(Set<DinoUser> usersIFollow) {
+    this.usersIFollow = usersIFollow;
+  }
+
+  public Set<DinoUser> getUsersWhoFollowMe() {
+    return usersWhoFollowMe;
+  }
+
+  public void setUsersWhoFollowMe(Set<DinoUser> usersWhoFollowMe) {
+    this.usersWhoFollowMe = usersWhoFollowMe;
+  }
 
   public Long getId() {
     return id;

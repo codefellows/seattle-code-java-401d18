@@ -9,8 +9,8 @@
 
 <h3 th:if="${username != null}" th:text="${'Current user: ' + username + ' with nickname ' + nickname}"></h3>
 
-<div th:replace="/fragments/nav-header :: h3"></div>
-<div th:replace="/fragments/nav-header :: dino-header"></div>
+<div th:replace="~{/fragments/nav-header :: h3}"></div>
+<div th:replace="~{/fragments/nav-header :: dino-header}"></div>
 
 <a href="/logout">Log out</a>
 </body>

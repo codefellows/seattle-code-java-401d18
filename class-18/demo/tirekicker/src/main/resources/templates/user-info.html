@@ -22,5 +22,19 @@
 </form>
 
 <div th:text="${'testDate: ' + #temporals.format(testDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+
+<form th:action="${'/follow-user/' + dinoUserId}" th:method="PUT">
+  <input type="submit" value="Follow" th:disabled="${browsingUserUsername.equals(dinoUserUsername)}">
+</form>
+
+<h3>Following</h3>
+<ul th:each="userFollowed : ${usersIFollow}">
+  <li th:text="${userFollowed.username}"></li>
+</ul>
+
+<h3>Followers</h3>
+<ul th:each="userFollowingMe : ${userFollowingMe}">
+  <li th:text="${userFollowingMe.username}"></li>
+</ul>
 </body>
 </html>
