@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".MainActivity">
+
+  <TextView
+    android:id="@+id/MainActivityProductNameTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="40dp"
+    android:text="@string/product_name"
+    android:textColor="@color/black"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toTopOf="@+id/MainActivityProductNameInputTextView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/MainActivityProductNameInputTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:autofillHints=""
+    android:ems="10"
+    android:hint="@string/input_product_name"
+    android:inputType="textPersonName"
+    android:minHeight="48dp"
+    android:textColorHint="#757575"
+    app:layout_constraintStart_toStartOf="@+id/MainActivityProductNameTextView"
+    app:layout_constraintTop_toBottomOf="@+id/MainActivityProductNameTextView" />
+
+  <ImageView
+    android:id="@+id/MainActivityImageView"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginTop="40dp"
+    android:contentDescription="@string/placeholder_image"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.419"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/MainActivityProductNameInputTextView"
+    app:srcCompat="@android:drawable/btn_star_big_on"
+    tools:srcCompat="@tools:sample/avatars" />
+
+  <Button
+    android:id="@+id/MainActivityMoveToOrderFormButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="40dp"
+    android:text="@string/order_form"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
