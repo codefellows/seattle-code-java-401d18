@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BuyStuff</string>
+    <string name="product_name">Product Name</string>
+    <string name="name">Name</string>
+    <string name="input_product_name">Input Product Name</string>
+    <string name="placeholder_image">Placeholder image for the BuyStuff application main activity</string>
+    <string name="order_form">Order Form</string>
+  <string name="username">Username</string>
+  <string name="save">Save</string>
+  <string name="settings_button">Navigate to settings page</string>
+  <string name="no_product_name">No Product</string>
+</resources>
