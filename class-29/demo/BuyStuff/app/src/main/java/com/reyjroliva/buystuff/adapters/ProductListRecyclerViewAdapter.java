@@ -20,8 +20,8 @@ import com.reyjroliva.buystuff.models.Product;
 import java.util.List;
 
 public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<ProductListRecyclerViewAdapter.ProductListViewHolder> {
-  List<Product> products;
   Context callingActivity;
+  List<Product> products;
 
   public ProductListRecyclerViewAdapter(List<Product> products, Context callingActivity) {
     this.products = products;
@@ -42,6 +42,7 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
       + "\n" + products.get(position).getDescription()
       + "\n" + products.get(position).getDateCreated()
       + "\n" + products.get(position).getCategory();
+
     productFragmentTextView.setText(productFragmentText);
 
     View productViewHolder = holder.itemView;
