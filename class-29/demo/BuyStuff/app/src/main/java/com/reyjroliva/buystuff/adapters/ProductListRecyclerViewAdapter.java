@@ -17,6 +17,8 @@ import com.reyjroliva.buystuff.R;
 import com.reyjroliva.buystuff.activities.OrderFormActivity;
 import com.reyjroliva.buystuff.models.Product;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<ProductListRecyclerViewAdapter.ProductListViewHolder> {
@@ -37,10 +39,11 @@ public class ProductListRecyclerViewAdapter extends RecyclerView.Adapter<Product
 
   @Override
   public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
-    TextView productFragmentTextView = (TextView) holder.itemView.findViewById(R.id.productFragmentTextView);
+    TextView productFragmentTextView = holder.itemView.findViewById(R.id.productFragmentTextView);
+    DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm zzz"); // Consider passing the current phone's Local to suppress warning
     String productFragmentText = (position+1) + ". " + products.get(position).getName()
       + "\n" + products.get(position).getDescription()
-      + "\n" + products.get(position).getDateCreated()
+      + "\n" + dateFormatter.format(products.get(position).getDateCreated())
       + "\n" + products.get(position).getCategory();
 
     productFragmentTextView.setText(productFragmentText);
