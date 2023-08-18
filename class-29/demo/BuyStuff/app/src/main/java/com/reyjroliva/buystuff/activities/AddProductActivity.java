@@ -58,7 +58,6 @@ public class AddProductActivity extends AppCompatActivity {
       );
 
       buyStuffDatabase.productDao().insertAProduct(productToSave);
-      // notify dataset changes for recycler view
       Snackbar.make(findViewById(R.id.AddProcutActivityView), "Product saved!", Snackbar.LENGTH_SHORT).show();
     });
   }

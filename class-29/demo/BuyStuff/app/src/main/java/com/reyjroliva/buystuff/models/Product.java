@@ -15,11 +15,6 @@ public class Product {
   java.util.Date dateCreated;
   ProductCategoryEnum category;
 
-  @Ignore
-  public Product(String name) {
-    this.name = name;
-  }
-
   public Product(String name, String description, java.util.Date dateCreated, ProductCategoryEnum category) {
     this.name = name;
     this.description = description;

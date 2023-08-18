@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
   void setupRecyclerView() {
     RecyclerView productListRecyclerView = (RecyclerView) findViewById(R.id.MainActivityProductRecyclerView);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-    // If you want to do a horizontal list:
-    //((LinearLayoutManager)layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
     productListRecyclerView.setLayoutManager(layoutManager);
 
     // Extra RecyclerView Styling: Add itemDecoration with desired spacing
