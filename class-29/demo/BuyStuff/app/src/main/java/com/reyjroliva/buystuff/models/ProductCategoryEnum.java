@@ -27,7 +27,7 @@ public enum ProductCategoryEnum {
     }
     return null;
   }
-  
+
   @NonNull
   @Override
   public String toString() {
