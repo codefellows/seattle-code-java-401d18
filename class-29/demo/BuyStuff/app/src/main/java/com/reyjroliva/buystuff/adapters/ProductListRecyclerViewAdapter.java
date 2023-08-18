@@ -1,7 +1,5 @@
 package com.reyjroliva.buystuff.adapters;
 
-import static com.reyjroliva.buystuff.MainActivity.PRODUCT_NAME_EXTRA_TAG;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;

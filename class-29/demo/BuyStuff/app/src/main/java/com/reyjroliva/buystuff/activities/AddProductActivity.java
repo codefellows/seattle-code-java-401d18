@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -39,7 +38,7 @@ public class AddProductActivity extends AppCompatActivity {
       .allowMainThreadQueries() // For dev purposes only
       .build();
 
-    productCategorySpinner = findViewById(R.id.AddProductActivityCategorySpnner);
+    productCategorySpinner = findViewById(R.id.AddProductActivityCategorySpinner);
     productDescriptionEditText = findViewById(R.id.AddProductActivityDescriptionEditText);
     productNameEditText = findViewById(R.id.AddProductActivityProductNameEditText);
     saveButton = findViewById(R.id.AddProductActivitySaveButton);
@@ -66,7 +65,7 @@ public class AddProductActivity extends AppCompatActivity {
       );
 
       buyStuffDatabase.productDao().insertAProduct(productToSave);
-      Snackbar.make(findViewById(R.id.AddProcutActivityView), "Product saved!", Snackbar.LENGTH_SHORT).show();
+      Snackbar.make(findViewById(R.id.AddProductActivityView), "Product saved!", Snackbar.LENGTH_SHORT).show();
     });
   }
 }

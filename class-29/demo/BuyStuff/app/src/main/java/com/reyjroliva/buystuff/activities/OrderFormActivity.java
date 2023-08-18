@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.reyjroliva.buystuff.MainActivity;
 import com.reyjroliva.buystuff.R;
 
-import org.w3c.dom.Text;
-
 public class OrderFormActivity extends AppCompatActivity {
 
   @Override

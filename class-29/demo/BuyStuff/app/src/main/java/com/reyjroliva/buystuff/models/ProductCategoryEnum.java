@@ -9,7 +9,7 @@ public enum ProductCategoryEnum {
   OFFICE_SUPPLIES("Office Supplies"),
   MISC("Miscellaneous");
 
-  private String text;
+  private final String text;
 
   ProductCategoryEnum(String text) {
     this.text = text;

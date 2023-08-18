@@ -9,13 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.reyjroliva.buystuff.R;
 
-import org.w3c.dom.Text;
-
 public class UserProfileActivity extends AppCompatActivity {
-  public static final String USER_NICKNAME_TAG = "userNickname"; // at top of class, so other classes can use it -- don't redeclare anywhre else!
+  public static final String USER_NICKNAME_TAG = "userNickname"; // at top of class, so other classes can use it -- don't redeclare anywhere else!
   SharedPreferences preferences; // put at top of class, so it can live long enough to be used in the onClickListener
 
   @Override
