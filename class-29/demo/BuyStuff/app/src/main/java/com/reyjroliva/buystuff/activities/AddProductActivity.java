@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -22,10 +21,16 @@ import java.util.Date;
 public class AddProductActivity extends AppCompatActivity {
   BuyStuffDatabase buyStuffDatabase;
 
+  Button saveButton;
+  EditText productDescriptionEditText;
+  EditText productNameEditText;
+  Spinner productCategorySpinner;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_product);
+
     buyStuffDatabase = Room.databaseBuilder(
       getApplicationContext(),
       BuyStuffDatabase.class,
@@ -33,13 +38,16 @@ public class AddProductActivity extends AppCompatActivity {
       .allowMainThreadQueries() // For dev purposes only
       .build();
 
-    Spinner productCategorySpinner = (Spinner) findViewById(R.id.AddProductActivityCategorySpnner);
+    productCategorySpinner = findViewById(R.id.AddProductActivityCategorySpinner);
+    productDescriptionEditText = findViewById(R.id.AddProductActivityDescriptionEditText);
+    productNameEditText = findViewById(R.id.AddProductActivityProductNameEditText);
+    saveButton = findViewById(R.id.AddProductActivitySaveButton);
 
-    setupProductCategorySpinner(productCategorySpinner);
-    setupSaveButton(productCategorySpinner);
+    setupProductCategorySpinner();
+    setupSaveButton();
   }
 
-  void setupProductCategorySpinner(Spinner productCategorySpinner) {
+  void setupProductCategorySpinner() {
     productCategorySpinner.setAdapter(new ArrayAdapter<>(
       this,
       android.R.layout.simple_spinner_item,
@@ -47,19 +55,17 @@ public class AddProductActivity extends AppCompatActivity {
     ));
   }
 
-  void setupSaveButton(Spinner productCategorySpinner) {
-    Button saveButton = (Button) findViewById(R.id.AddProductActivitySaveButton);
+  void setupSaveButton() {
     saveButton.setOnClickListener(v -> {
       Product productToSave = new Product(
-        ((EditText)findViewById(R.id.AddProductActivityProductNameEditText)).getText().toString(),
-        ((EditText)findViewById(R.id.AddProductActivityDescriptionEditText)).getText().toString(),
+        productNameEditText.getText().toString(),
+        productDescriptionEditText.getText().toString(),
         new Date(), // gets whatever the current date is right now
         ProductCategoryEnum.fromString(productCategorySpinner.getSelectedItem().toString())
       );
 
       buyStuffDatabase.productDao().insertAProduct(productToSave);
-      // notify dataset changes for recycler view
-      Snackbar.make(findViewById(R.id.AddProcutActivityView), "Product saved!", Snackbar.LENGTH_SHORT).show();
+      Snackbar.make(findViewById(R.id.AddProductActivityView), "Product saved!", Snackbar.LENGTH_SHORT).show();
     });
   }
 }

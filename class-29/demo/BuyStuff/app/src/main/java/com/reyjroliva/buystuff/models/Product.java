@@ -1,7 +1,6 @@
 package com.reyjroliva.buystuff.models;
 
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -14,11 +13,6 @@ public class Product {
   String description;
   java.util.Date dateCreated;
   ProductCategoryEnum category;
-
-  @Ignore
-  public Product(String name) {
-    this.name = name;
-  }
 
   public Product(String name, String description, java.util.Date dateCreated, ProductCategoryEnum category) {
     this.name = name;

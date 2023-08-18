@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/AddProcutActivityView"
+  android:id="@+id/AddProductActivityView"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".activities.AddProductActivity">
@@ -62,7 +62,7 @@
     app:layout_constraintTop_toBottomOf="@+id/AddProductActivityProductNameTextView" />
 
   <Spinner
-    android:id="@+id/AddProductActivityCategorySpnner"
+    android:id="@+id/AddProductActivityCategorySpinner"
     android:layout_width="0dp"
     android:layout_height="48dp"
     android:layout_marginStart="24dp"
@@ -82,7 +82,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityCategorySpnner" />
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityCategorySpinner" />
 
   <EditText
     android:id="@+id/AddProductActivityDescriptionEditText"

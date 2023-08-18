@@ -1,5 +1,7 @@
 package com.reyjroliva.buystuff.models;
 
+import androidx.annotation.NonNull;
+
 public enum ProductCategoryEnum {
   CLOTHES("Clothes"),
   ELECTRONICS("Electronics"),
@@ -7,7 +9,7 @@ public enum ProductCategoryEnum {
   OFFICE_SUPPLIES("Office Supplies"),
   MISC("Miscellaneous");
 
-  private String text;
+  private final String text;
 
   ProductCategoryEnum(String text) {
     this.text = text;
@@ -24,5 +26,11 @@ public enum ProductCategoryEnum {
       }
     }
     return null;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return this.text;
   }
 }
