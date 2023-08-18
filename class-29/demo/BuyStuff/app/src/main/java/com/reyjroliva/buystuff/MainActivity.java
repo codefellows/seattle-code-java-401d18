@@ -31,13 +31,20 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   private final String TAG = "MainActivity";
+  public static final String DATABASE_NAME = "reyjroliva_buy_stuff"; // at top of class, needs to be the same value everywhere in the app!
   public static final String PRODUCT_NAME_EXTRA_TAG = "productName"; // at top of class for sharing, public to access from other classes
-  SharedPreferences preferences;
-  List<Product> products = new ArrayList<>();
 
   BuyStuffDatabase buyStuffDatabase; // place at the top of class with other properties
-  public static final String DATABASE_NAME = "reyjroliva_buy_stuff"; // also at top of class, needs to be the same value everywhere in the app!
+  List<Product> products;
   ProductListRecyclerViewAdapter adapter;
+  SharedPreferences preferences;
+
+  Button addProductButton;
+  Button orderFormButton;
+  EditText productNameEditText;
+  ImageView settingsButton;
+  RecyclerView productListRecyclerView;
+  TextView usernameTextView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -45,28 +52,44 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    products = new ArrayList<>();
+
+    addProductButton = findViewById(R.id.MainActivityMoveToAddProductButton);
+    orderFormButton = findViewById(R.id.MainActivityMoveToOrderFormButton);
+    productListRecyclerView = findViewById(R.id.MainActivityProductRecyclerView);
+    productNameEditText = findViewById(R.id.MainActivityProductNameInputTextView);
+    settingsButton = findViewById(R.id.MainActivitySettingsButton);
+    usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
     setupDatabase();
-    setupSettingsButton();
+
     setupAddProductButton();
     setupOrderFormButton();
-    // NOTE: product instances must be created before we hand the products into the RecyclerView
     setupRecyclerView();
+    setupSettingsButton();
   }
 
   @Override
   protected void onResume() {
     super.onResume();
 
-    setupUsernameTextView();
     updateProductListFromDatabase();
+
+    setupUsernameTextView();
+  }
+
+  void setupAddProductButton() {
+    addProductButton.setOnClickListener(v -> {
+      Intent goToAddProductActivityIntent = new Intent(MainActivity.this, AddProductActivity.class);
+      startActivity(goToAddProductActivityIntent);
+    });
   }
 
   void setupDatabase() {
     buyStuffDatabase = Room.databaseBuilder(
-      getApplicationContext(),
-      BuyStuffDatabase.class,
-      DATABASE_NAME)
+        getApplicationContext(),
+        BuyStuffDatabase.class,
+        DATABASE_NAME)
       .fallbackToDestructiveMigration() // If Room gets confused, it tosses your database; turn this off in production!
       .allowMainThreadQueries()
       .build();
@@ -74,31 +97,10 @@ public class MainActivity extends AppCompatActivity {
     products = buyStuffDatabase.productDao().findAll(); // to task that the database works, even through we're not returning the value anywhere (yet!)
   }
 
-  void setupSettingsButton() {
-    ((ImageView)findViewById(R.id.MainActivitySettingsButton)).setOnClickListener(v -> {
-      Intent goToUserProfileActivityIntent = new Intent(MainActivity.this, UserProfileActivity.class);
-      startActivity(goToUserProfileActivityIntent);
-    });
-  }
-
-  void setupUsernameTextView() {
-    String userNickname = preferences.getString(USER_NICKNAME_TAG, "No Nickname");
-    ((TextView)findViewById(R.id.MainActivityUsernameTextView)).setText(userNickname);
-  }
-
-  void setupAddProductButton() {
-    Button addProductButton = findViewById(R.id.MainActivityMoveToAddProductButton);
-    addProductButton.setOnClickListener(v -> {
-      Intent goToAddProductActivityIntent = new Intent(MainActivity.this, AddProductActivity.class);
-      startActivity(goToAddProductActivityIntent);
-    });
-  }
-
   void setupOrderFormButton() {
-    Button orderFormButton = findViewById(R.id.MainActivityMoveToOrderFormButton);
     orderFormButton.setOnClickListener(v -> {
       // grabbing the product name from our edit text view
-      String productName = ((EditText)findViewById(R.id.MainActivityProductNameInputTextView)).getText().toString();
+      String productName = productNameEditText.getText().toString();
 
       // creating an intent and putting an extra value
       Intent goToOrderFormIntent = new Intent(MainActivity.this, OrderFormActivity.class);
@@ -109,8 +111,20 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
+  void updateProductListFromDatabase() {
+    products.clear();
+    products.addAll(buyStuffDatabase.productDao().findAll());
+    adapter.notifyDataSetChanged();
+  }
+
+  void setupSettingsButton() {
+    settingsButton.setOnClickListener(v -> {
+      Intent goToUserProfileActivityIntent = new Intent(MainActivity.this, UserProfileActivity.class);
+      startActivity(goToUserProfileActivityIntent);
+    });
+  }
+
   void setupRecyclerView() {
-    RecyclerView productListRecyclerView = (RecyclerView) findViewById(R.id.MainActivityProductRecyclerView);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     productListRecyclerView.setLayoutManager(layoutManager);
 
@@ -122,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         super.getItemOffsets(outRect, view, parent, state);
         outRect.bottom = spaceInPixels;
 
-        if(parent.getChildAdapterPosition(view) == products.size()-1) {
+        if (parent.getChildAdapterPosition(view) == products.size() - 1) {
           outRect.bottom = 0;
         }
       }
@@ -132,9 +146,8 @@ public class MainActivity extends AppCompatActivity {
     productListRecyclerView.setAdapter(adapter);
   }
 
-  void updateProductListFromDatabase() {
-    products.clear();
-    products.addAll(buyStuffDatabase.productDao().findAll());
-    adapter.notifyDataSetChanged();
+  void setupUsernameTextView() {
+    String userNickname = preferences.getString(USER_NICKNAME_TAG, "No Nickname");
+    usernameTextView.setText(userNickname);
   }
 }
