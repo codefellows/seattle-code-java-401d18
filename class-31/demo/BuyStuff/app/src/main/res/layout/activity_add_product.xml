@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/AddProductActivityView"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".activities.AddProductActivity">
+
+  <TextView
+    android:id="@+id/AddProductActivityTitleTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="40dp"
+    android:text="@string/add_product"
+    android:textColor="#000000"
+    android:textSize="34sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/AddProductActivityProductNameTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="40dp"
+    android:gravity="center_vertical"
+    android:text="@string/product_name"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityTitleTextView" />
+
+  <EditText
+    android:id="@+id/AddProductActivityProductNameEditText"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginStart="8dp"
+    android:autofillHints=""
+    android:ems="10"
+    android:hint="@string/name"
+    android:inputType="textPersonName"
+    android:textColorHint="#757575"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="@+id/AddProductActivityProductNameTextView"
+    app:layout_constraintStart_toEndOf="@+id/AddProductActivityProductNameTextView"
+    app:layout_constraintTop_toTopOf="@+id/AddProductActivityProductNameTextView"
+    app:layout_constraintVertical_bias="0.0" />
+
+  <TextView
+    android:id="@+id/AddProductActivityDescriptionTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginTop="24dp"
+    android:gravity="center_vertical"
+    android:text="@string/product_description"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    app:layout_constraintStart_toStartOf="@+id/AddProductActivityProductNameTextView"
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityProductNameTextView" />
+
+  <Spinner
+    android:id="@+id/AddProductActivityCategorySpinner"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="24dp"
+    android:contentDescription="@string/product_category_select"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityDescriptionTextView" />
+
+  <Button
+    android:id="@+id/AddProductActivitySaveButton"
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="40dp"
+    android:text="@string/save"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityCategorySpinner" />
+
+  <EditText
+    android:id="@+id/AddProductActivityDescriptionEditText"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginStart="8dp"
+    android:autofillHints=""
+    android:ems="10"
+    android:hint="@string/product_description_multi_line"
+    android:inputType="textPersonName"
+    app:layout_constraintBottom_toBottomOf="@+id/AddProductActivityDescriptionTextView"
+    app:layout_constraintStart_toEndOf="@+id/AddProductActivityDescriptionTextView"
+    app:layout_constraintTop_toTopOf="@+id/AddProductActivityDescriptionTextView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
