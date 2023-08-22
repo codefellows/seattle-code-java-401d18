@@ -1,36 +1,42 @@
 # this is an auto generated file. This will be overwritten
-mutation CreateTodo(
-  $input: CreateTodoInput!
-  $condition: ModelTodoConditionInput
+mutation CreateProduct(
+  $input: CreateProductInput!
+  $condition: ModelProductConditionInput
 ) {
-  createTodo(input: $input, condition: $condition) {
+  createProduct(input: $input, condition: $condition) {
     id
     name
     description
+    dateCreated
+    productCategory
     createdAt
     updatedAt
   }
 }
-mutation UpdateTodo(
-  $input: UpdateTodoInput!
-  $condition: ModelTodoConditionInput
+mutation UpdateProduct(
+  $input: UpdateProductInput!
+  $condition: ModelProductConditionInput
 ) {
-  updateTodo(input: $input, condition: $condition) {
+  updateProduct(input: $input, condition: $condition) {
     id
     name
     description
+    dateCreated
+    productCategory
     createdAt
     updatedAt
   }
 }
-mutation DeleteTodo(
-  $input: DeleteTodoInput!
-  $condition: ModelTodoConditionInput
+mutation DeleteProduct(
+  $input: DeleteProductInput!
+  $condition: ModelProductConditionInput
 ) {
-  deleteTodo(input: $input, condition: $condition) {
+  deleteProduct(input: $input, condition: $condition) {
     id
     name
     description
+    dateCreated
+    productCategory
     createdAt
     updatedAt
   }

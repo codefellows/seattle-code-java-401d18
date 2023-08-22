@@ -12,18 +12,20 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Product;
 import com.reyjroliva.buystuff.activities.AddProductActivity;
 import com.reyjroliva.buystuff.activities.OrderFormActivity;
 import com.reyjroliva.buystuff.activities.UserProfileActivity;
 import com.reyjroliva.buystuff.adapters.ProductListRecyclerViewAdapter;
-import com.reyjroliva.buystuff.models.Product;
-import com.reyjroliva.buystuff.models.ProductCategoryEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,18 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     products = new ArrayList<>();
-    // Temporary hardcoded products in interim of adding AWS Amplify
-    Product productOne = new Product("notebook", "this is a notebook", new java.util.Date(), ProductCategoryEnum.OFFICE_SUPPLIES);
-    Product productTwo = new Product("pencil", "this is a pencil", new java.util.Date(), ProductCategoryEnum.OFFICE_SUPPLIES);
-    products.add(productOne);
-    products.add(productTwo);
-    products.add(productOne);
-    products.add(productTwo);
-    products.add(productOne);
-    products.add(productTwo);
-    products.add(productOne);
-    products.add(productTwo);
-
 
     addProductButton = findViewById(R.id.MainActivityMoveToAddProductButton);
     orderFormButton = findViewById(R.id.MainActivityMoveToOrderFormButton);
@@ -72,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     setupAddProductButton();
     setupOrderFormButton();
+    updateProductListFromDatabase();
     setupRecyclerView();
     setupSettingsButton();
   }
@@ -107,10 +98,21 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void updateProductListFromDatabase() {
-    // TODO: Make a DynamoDB/GraphQL call
-    //products.clear();
-    //products.addAll(buyStuffDatabase.productDao().findAll());
-    adapter.notifyDataSetChanged();
+    Amplify.API.query(
+      ModelQuery.list(Product.class),
+      success -> {
+        Log.i(TAG, "Read products succcessfully!");
+        products.clear();
+        for(Product databaseProduct : success.getData()) {
+          products.add(databaseProduct);
+        }
+
+        runOnUiThread(() -> {
+          adapter.notifyDataSetChanged();
+        });
+      },
+      failure -> Log.i(TAG, "Did not read products successfully")
+    );
   }
 
   void setupSettingsButton() {

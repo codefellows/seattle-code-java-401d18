@@ -26,6 +26,7 @@
     android:autofillHints=""
     android:ems="10"
     android:hint="@string/input_product_name"
+    android:imeOptions="actionDone"
     android:inputType="textPersonName"
     android:minHeight="48dp"
     android:textColorHint="#757575"
