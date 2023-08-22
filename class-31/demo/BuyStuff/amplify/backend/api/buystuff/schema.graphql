@@ -2,8 +2,26 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Todo @model {
+# This is the ONLY source of truth for your data model
+# After you change this, do these steps:
+# 1. On the command line, type "amplify codegen models"
+# 2. "amplify api update" -> Disable conflict resolution
+# 3. "amplify push"
+
+type Product @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   description: String
+  dateCreated: AWSDateTime
+  productCategory: ProductCategoryEnum
 }
+
+enum ProductCategoryEnum {
+  Clothes
+  Electronics
+  Perishable_Goods
+  Office_Supplies
+  Misc
+}
+
+
