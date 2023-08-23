@@ -1,6 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.temporal.Temporal;
+import com.amplifyframework.core.model.annotations.BelongsTo;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,17 +25,20 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 @ModelConfig(pluralName = "Products", type = Model.Type.USER, version = 1, authRules = {
   @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
 })
+@Index(name = "byContact", fields = {"contactId","name"})
 public final class Product implements Model {
   public static final QueryField ID = field("Product", "id");
   public static final QueryField NAME = field("Product", "name");
   public static final QueryField DESCRIPTION = field("Product", "description");
   public static final QueryField DATE_CREATED = field("Product", "dateCreated");
   public static final QueryField PRODUCT_CATEGORY = field("Product", "productCategory");
+  public static final QueryField CONTACT_PERSON = field("Product", "contactId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String name;
   private final @ModelField(targetType="String") String description;
   private final @ModelField(targetType="AWSDateTime") Temporal.DateTime dateCreated;
   private final @ModelField(targetType="ProductCategoryEnum") ProductCategoryEnum productCategory;
+  private final @ModelField(targetType="Contact") @BelongsTo(targetName = "contactId", targetNames = {"contactId"}, type = Contact.class) Contact contactPerson;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -61,6 +65,10 @@ public final class Product implements Model {
       return productCategory;
   }
   
+  public Contact getContactPerson() {
+      return contactPerson;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -69,12 +77,13 @@ public final class Product implements Model {
       return updatedAt;
   }
   
-  private Product(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory) {
+  private Product(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory, Contact contactPerson) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.dateCreated = dateCreated;
     this.productCategory = productCategory;
+    this.contactPerson = contactPerson;
   }
   
   @Override
@@ -90,6 +99,7 @@ public final class Product implements Model {
               ObjectsCompat.equals(getDescription(), product.getDescription()) &&
               ObjectsCompat.equals(getDateCreated(), product.getDateCreated()) &&
               ObjectsCompat.equals(getProductCategory(), product.getProductCategory()) &&
+              ObjectsCompat.equals(getContactPerson(), product.getContactPerson()) &&
               ObjectsCompat.equals(getCreatedAt(), product.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), product.getUpdatedAt());
       }
@@ -103,6 +113,7 @@ public final class Product implements Model {
       .append(getDescription())
       .append(getDateCreated())
       .append(getProductCategory())
+      .append(getContactPerson())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -118,6 +129,7 @@ public final class Product implements Model {
       .append("description=" + String.valueOf(getDescription()) + ", ")
       .append("dateCreated=" + String.valueOf(getDateCreated()) + ", ")
       .append("productCategory=" + String.valueOf(getProductCategory()) + ", ")
+      .append("contactPerson=" + String.valueOf(getContactPerson()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -142,6 +154,7 @@ public final class Product implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -151,7 +164,8 @@ public final class Product implements Model {
       name,
       description,
       dateCreated,
-      productCategory);
+      productCategory,
+      contactPerson);
   }
   public interface NameStep {
     BuildStep name(String name);
@@ -164,6 +178,7 @@ public final class Product implements Model {
     BuildStep description(String description);
     BuildStep dateCreated(Temporal.DateTime dateCreated);
     BuildStep productCategory(ProductCategoryEnum productCategory);
+    BuildStep contactPerson(Contact contactPerson);
   }
   
 
@@ -173,6 +188,7 @@ public final class Product implements Model {
     private String description;
     private Temporal.DateTime dateCreated;
     private ProductCategoryEnum productCategory;
+    private Contact contactPerson;
     @Override
      public Product build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -182,7 +198,8 @@ public final class Product implements Model {
           name,
           description,
           dateCreated,
-          productCategory);
+          productCategory,
+          contactPerson);
     }
     
     @Override
@@ -210,6 +227,12 @@ public final class Product implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep contactPerson(Contact contactPerson) {
+        this.contactPerson = contactPerson;
+        return this;
+    }
+    
     /**
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -222,12 +245,13 @@ public final class Product implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory) {
+    private CopyOfBuilder(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory, Contact contactPerson) {
       super.id(id);
       super.name(name)
         .description(description)
         .dateCreated(dateCreated)
-        .productCategory(productCategory);
+        .productCategory(productCategory)
+        .contactPerson(contactPerson);
     }
     
     @Override
@@ -248,6 +272,11 @@ public final class Product implements Model {
     @Override
      public CopyOfBuilder productCategory(ProductCategoryEnum productCategory) {
       return (CopyOfBuilder) super.productCategory(productCategory);
+    }
+    
+    @Override
+     public CopyOfBuilder contactPerson(Contact contactPerson) {
+      return (CopyOfBuilder) super.contactPerson(contactPerson);
     }
   }
   

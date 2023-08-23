@@ -73,16 +73,29 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/AddProductActivityDescriptionTextView" />
 
+  <Spinner
+    android:id="@+id/AddProductActivityContactSpinner"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_marginStart="24dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="24dp"
+    android:contentDescription="@string/product_contact_select"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityCategorySpinner" />
+
   <Button
     android:id="@+id/AddProductActivitySaveButton"
     android:layout_width="100dp"
     android:layout_height="50dp"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="24dp"
     android:text="@string/save"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintHorizontal_bias="0.498"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityCategorySpinner" />
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityContactSpinner" />
 
   <EditText
     android:id="@+id/AddProductActivityDescriptionEditText"
@@ -93,6 +106,7 @@
     android:ems="10"
     android:hint="@string/product_description_multi_line"
     android:inputType="textPersonName"
+    android:textColorHint="#757575"
     app:layout_constraintBottom_toBottomOf="@+id/AddProductActivityDescriptionTextView"
     app:layout_constraintStart_toEndOf="@+id/AddProductActivityDescriptionTextView"
     app:layout_constraintTop_toTopOf="@+id/AddProductActivityDescriptionTextView" />

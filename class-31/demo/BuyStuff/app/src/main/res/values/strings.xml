@@ -16,4 +16,5 @@
   <string name="product_description">Description</string>
   <string name="product_description_multi_line">Product Description</string>
   <string name="product_category_select">Select Product Category</string>
+    <string name="product_contact_select">Select Product Contact</string>
 </resources>
