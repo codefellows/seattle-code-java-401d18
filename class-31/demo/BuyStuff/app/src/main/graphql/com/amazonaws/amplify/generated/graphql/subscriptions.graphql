@@ -6,6 +6,17 @@ subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -17,6 +28,17 @@ subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -28,6 +50,83 @@ subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateContact($filter: ModelSubscriptionContactFilterInput) {
+  onCreateContact(filter: $filter) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateContact($filter: ModelSubscriptionContactFilterInput) {
+  onUpdateContact(filter: $filter) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteContact($filter: ModelSubscriptionContactFilterInput) {
+  onDeleteContact(filter: $filter) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }

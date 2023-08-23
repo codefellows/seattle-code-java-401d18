@@ -19,8 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Contact;
 import com.amplifyframework.datastore.generated.model.Product;
 import com.reyjroliva.buystuff.activities.AddProductActivity;
 import com.reyjroliva.buystuff.activities.OrderFormActivity;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     settingsButton = findViewById(R.id.MainActivitySettingsButton);
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
+    //createContactInstances();
     setupAddProductButton();
     setupOrderFormButton();
     updateProductListFromDatabase();
@@ -104,7 +107,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Read products succcessfully!");
         products.clear();
         for(Product databaseProduct : success.getData()) {
-          products.add(databaseProduct);
+          // only addd the products whose contact is "Rey Oliva"
+          String contactName = "Rey Oliva"; // in lab, you'll need to get this from your settings page selection (SharedPref!)
+          if(databaseProduct.getContactPerson() != null
+          && databaseProduct.getContactPerson().getFullName().equals(contactName)) {
+            products.add(databaseProduct);
+          }
         }
 
         runOnUiThread(() -> {
@@ -147,5 +155,27 @@ public class MainActivity extends AppCompatActivity {
   void setupUsernameTextView() {
     String userNickname = preferences.getString(USER_NICKNAME_TAG, "No Nickname");
     usernameTextView.setText(userNickname);
+  }
+
+  void createContactInstances() {
+    Contact contact1 = Contact.builder()
+      .email("jb@example.com")
+      .fullName("JB Tellez")
+      .build();
+    Amplify.API.mutate(
+      ModelMutation.create(contact1),
+      successResponse -> Log.i(TAG, "MainActivity.createContactInstances(): made a contact successfully"),
+      failureResponse -> Log.i(TAG, "MainActivity.createContactInstances(): contact failed with this response: " + failureResponse)
+    );
+
+    Contact contact2 = Contact.builder()
+      .email("rey@example.com")
+      .fullName("Rey Oliva")
+      .build();
+    Amplify.API.mutate(
+      ModelMutation.create(contact2),
+      successResponse -> Log.i(TAG, "MainActivity.createContactInstances(): made a contact successfully"),
+      failureResponse -> Log.i(TAG, "MainActivity.createContactInstances(): contact failed with this response: " + failureResponse)
+    );
   }
 }

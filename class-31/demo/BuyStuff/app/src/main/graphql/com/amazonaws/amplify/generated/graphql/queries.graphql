@@ -6,6 +6,17 @@ query GetProduct($id: ID!) {
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -22,6 +33,91 @@ query ListProducts(
       description
       dateCreated
       productCategory
+      contactId
+      contactPerson {
+        id
+        email
+        fullName
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetContact($id: ID!) {
+  getContact(id: $id) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListContacts(
+  $filter: ModelContactFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query ProductsByContactIdAndName(
+  $contactId: ID!
+  $name: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelProductFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  productsByContactIdAndName(
+    contactId: $contactId
+    name: $name
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      description
+      dateCreated
+      productCategory
+      contactId
+      contactPerson {
+        id
+        email
+        fullName
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

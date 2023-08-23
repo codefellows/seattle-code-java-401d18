@@ -9,6 +9,17 @@ mutation CreateProduct(
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -23,6 +34,17 @@ mutation UpdateProduct(
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -37,6 +59,92 @@ mutation DeleteProduct(
     description
     dateCreated
     productCategory
+    contactId
+    contactPerson {
+      id
+      email
+      fullName
+      products {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateContact(
+  $input: CreateContactInput!
+  $condition: ModelContactConditionInput
+) {
+  createContact(input: $input, condition: $condition) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateContact(
+  $input: UpdateContactInput!
+  $condition: ModelContactConditionInput
+) {
+  updateContact(input: $input, condition: $condition) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteContact(
+  $input: DeleteContactInput!
+  $condition: ModelContactConditionInput
+) {
+  deleteContact(input: $input, condition: $condition) {
+    id
+    email
+    fullName
+    products {
+      items {
+        id
+        name
+        description
+        dateCreated
+        productCategory
+        contactId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
