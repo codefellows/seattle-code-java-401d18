@@ -21,6 +21,11 @@ import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUserAttribute;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
+import com.amplifyframework.auth.options.AuthSignOutOptions;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Contact;
 import com.amplifyframework.datastore.generated.model.Product;
@@ -51,6 +56,23 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    //// Set the user's username based on their nickname saved in the Cognito user pool
+    //Amplify.Auth.fetchUserAttributes(
+    //  success -> {
+    //    for(AuthUserAttribute userAttribute : success) {
+    //      if(userAttribute.getKey().getKeyString().equals("nickname")) {
+    //        String userNickname = userAttribute.getValue();
+    //        runOnUiThread(() -> {
+    //          // update a textView with the nickname
+    //        });
+    //      }
+    //    }
+    //  },
+    //  failure -> {
+    //
+    //  }
+    //);
 
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     products = new ArrayList<>();
