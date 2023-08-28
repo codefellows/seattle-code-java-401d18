@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".activities.VerifyActivity">
+
+  <TextView
+    android:id="@+id/VerifyActivityTitleTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="40dp"
+    android:text="@string/verify_account"
+    android:textColor="#000000"
+    android:textSize="34sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/VerifyActivityEmailEditText"
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="40dp"
+    android:autofillHints=""
+    android:ems="10"
+    android:hint="@string/email"
+    android:inputType="textPersonName"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/VerifyActivityTitleTextView" />
+
+  <EditText
+    android:id="@+id/VerifyActivityCodeEditText"
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="40dp"
+    android:autofillHints=""
+    android:ems="10"
+    android:hint="@string/verification_number"
+    android:inputType="number"
+    android:textColorHint="#757575"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/VerifyActivityEmailEditText" />
+
+  <Button
+    android:id="@+id/VerifyActivitySubmitButton"
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="40dp"
+    android:text="@string/submit"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/VerifyActivityCodeEditText" />
+</androidx.constraintlayout.widget.ConstraintLayout>

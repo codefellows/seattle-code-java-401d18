@@ -16,5 +16,13 @@
   <string name="product_description">Description</string>
   <string name="product_description_multi_line">Product Description</string>
   <string name="product_category_select">Select Product Category</string>
-    <string name="product_contact_select">Select Product Contact</string>
+  <string name="product_contact_select">Select Product Contact</string>
+  <string name="sign_up">Sign Up</string>
+  <string name="email">Email</string>
+  <string name="password">Password</string>
+  <string name="submit">Submit</string>
+  <string name="verify_account">Verify Account</string>
+  <string name="verification_number">Verifiation Code</string>
+  <string name="login">Login</string>
+  <string name="logout">Logout</string>
 </resources>
