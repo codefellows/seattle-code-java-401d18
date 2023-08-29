@@ -57,23 +57,6 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    //// Set the user's username based on their nickname saved in the Cognito user pool
-    //Amplify.Auth.fetchUserAttributes(
-    //  success -> {
-    //    for(AuthUserAttribute userAttribute : success) {
-    //      if(userAttribute.getKey().getKeyString().equals("nickname")) {
-    //        String userNickname = userAttribute.getValue();
-    //        runOnUiThread(() -> {
-    //          // update a textView with the nickname
-    //        });
-    //      }
-    //    }
-    //  },
-    //  failure -> {
-    //
-    //  }
-    //);
-
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     products = new ArrayList<>();
 
@@ -84,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     settingsButton = findViewById(R.id.MainActivitySettingsButton);
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
-    //createContactInstances();
     setupAddProductButton();
     setupOrderFormButton();
     updateProductListFromDatabase();

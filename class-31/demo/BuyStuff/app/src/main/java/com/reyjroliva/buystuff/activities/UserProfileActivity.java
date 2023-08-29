@@ -25,7 +25,7 @@ public class UserProfileActivity extends AppCompatActivity {
   public static final String USER_NICKNAME_TAG = "userNickname"; // at top of class, so other classes can use it -- don't redeclare anywhere else!
 
   SharedPreferences preferences; // put at top of class, so it can live long enough to be used in the onClickListener
-  AuthUser authUser; // Lecture36 Follow up: Creating an auth user to track whether or a not a user is signed in. Used for rendering buttons
+  AuthUser authUser;
 
   Button loginButton;
   Button logoutButton;
@@ -53,13 +53,7 @@ public class UserProfileActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    /* Lecture36 Follow up: Determine if user is logged in.
-    * If the user is logged in, only show the Logout button.
-    * If a user is not logged in, only show the Sign Up/Login buttons
-    * This can also be used to grab the user's attributes if you choose to use this
-    * instead of the fetchUserAttributes in the MainActivity
-    * NOTE: remember to call the render buttons function whether it fails or succeeds!
-    */
+    // Determine if user is logged in, show auth buttons as appropriate
     Amplify.Auth.getCurrentUser(
       success -> {
         Log.i(TAG, "User authenticated with username: " + success.getUsername());
@@ -88,7 +82,6 @@ public class UserProfileActivity extends AppCompatActivity {
       preferencesEditor.putString(USER_NICKNAME_TAG, userNicknameString);
       preferencesEditor.apply(); // nothing will save if you forget this line!!
 
-      //Snackbar.make(findViewById(R.id.userProfileActivityView), "Settings saved!", Snackbar.LENGTH_SHORT).show();
       Toast.makeText(UserProfileActivity.this, "Settings saved!", Toast.LENGTH_SHORT).show();
     });
   }
@@ -118,7 +111,7 @@ public class UserProfileActivity extends AppCompatActivity {
        signOutResult -> {
          if(signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
            Log.i(TAG, "Global sign out successful!");
-           // Lecture36 Followup: Send user back to MainActivity on Logout
+
            Intent goToMainActivity = new Intent(UserProfileActivity.this, MainActivity.class);
            startActivity(goToMainActivity);
          } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
