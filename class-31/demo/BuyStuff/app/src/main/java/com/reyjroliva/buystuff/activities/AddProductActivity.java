@@ -80,10 +80,6 @@ public class AddProductActivity extends AppCompatActivity {
       }
       assert contacts != null;
       Contact selectedContact = contacts.stream().filter(c -> c.getFullName().equals(selectedContactString)).findAny().orElseThrow(RuntimeException::new);
-      //for(Contact contact : contacts) {
-      //  if(contact.getFullName().equals(selectedContactString))
-      //    selectedContact = contact;
-      //}
 
       Product productToSave = Product.builder()
           .name(productNameEditText.getText().toString())

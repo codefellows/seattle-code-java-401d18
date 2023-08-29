@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     settingsButton = findViewById(R.id.MainActivitySettingsButton);
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
+    //manualS3FileUpload();
     setupAddProductButton();
     setupOrderFormButton();
     updateProductListFromDatabase();
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Read products succcessfully!");
         products.clear();
         for(Product databaseProduct : success.getData()) {
-          // only addd the products whose contact is "Rey Oliva"
+          // only add the products whose contact is "Rey Oliva"
           String contactName = "Rey Oliva"; // in lab, you'll need to get this from your settings page selection (SharedPref!)
           if(databaseProduct.getContactPerson() != null
           && databaseProduct.getContactPerson().getFullName().equals(contactName)) {
@@ -181,5 +182,9 @@ public class MainActivity extends AppCompatActivity {
       successResponse -> Log.i(TAG, "MainActivity.createContactInstances(): made a contact successfully"),
       failureResponse -> Log.i(TAG, "MainActivity.createContactInstances(): contact failed with this response: " + failureResponse)
     );
+  }
+
+  void manualS3FileUpload() {
+
   }
 }

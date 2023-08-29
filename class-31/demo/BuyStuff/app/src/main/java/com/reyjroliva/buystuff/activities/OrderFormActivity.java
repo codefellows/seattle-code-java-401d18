@@ -10,23 +10,30 @@ import com.reyjroliva.buystuff.MainActivity;
 import com.reyjroliva.buystuff.R;
 
 public class OrderFormActivity extends AppCompatActivity {
+  private static String TAG = "OrderFormActivity";
+
+  Intent callingIntent;
+
+  TextView productNameTextView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_order_form);
 
+    callingIntent = getIntent();
+
+    productNameTextView = findViewById(R.id.OrderFormProductNameTextView);
+
     setupProductNameTextView();
   }
 
   void setupProductNameTextView() {
-    Intent callingIntent = getIntent();
     String productNameString = null;
     if(callingIntent != null) {
       productNameString = callingIntent.getStringExtra(MainActivity.PRODUCT_NAME_EXTRA_TAG);
     }
 
-    TextView productNameTextView = (TextView) findViewById(R.id.OrderFormProductNameTextView);
     if(productNameString != null && !productNameString.equals("")) {
       productNameTextView.setText(productNameString);
     } else {
