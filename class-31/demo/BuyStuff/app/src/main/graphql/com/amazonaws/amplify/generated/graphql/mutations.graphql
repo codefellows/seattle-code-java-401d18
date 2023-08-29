@@ -20,6 +20,7 @@ mutation CreateProduct(
       createdAt
       updatedAt
     }
+    productImageS3Key
     createdAt
     updatedAt
   }
@@ -45,6 +46,7 @@ mutation UpdateProduct(
       createdAt
       updatedAt
     }
+    productImageS3Key
     createdAt
     updatedAt
   }
@@ -70,6 +72,7 @@ mutation DeleteProduct(
       createdAt
       updatedAt
     }
+    productImageS3Key
     createdAt
     updatedAt
   }
@@ -90,6 +93,7 @@ mutation CreateContact(
         dateCreated
         productCategory
         contactId
+        productImageS3Key
         createdAt
         updatedAt
       }
@@ -115,6 +119,7 @@ mutation UpdateContact(
         dateCreated
         productCategory
         contactId
+        productImageS3Key
         createdAt
         updatedAt
       }
@@ -140,6 +145,7 @@ mutation DeleteContact(
         dateCreated
         productCategory
         contactId
+        productImageS3Key
         createdAt
         updatedAt
       }

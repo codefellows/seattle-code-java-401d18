@@ -17,6 +17,7 @@ subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
       createdAt
       updatedAt
     }
+    productImageS3Key
     createdAt
     updatedAt
   }
@@ -39,6 +40,7 @@ subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
       createdAt
       updatedAt
     }
+    productImageS3Key
     createdAt
     updatedAt
   }
@@ -61,6 +63,7 @@ subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
       createdAt
       updatedAt
     }
+    productImageS3Key
     createdAt
     updatedAt
   }
@@ -78,6 +81,7 @@ subscription OnCreateContact($filter: ModelSubscriptionContactFilterInput) {
         dateCreated
         productCategory
         contactId
+        productImageS3Key
         createdAt
         updatedAt
       }
@@ -100,6 +104,7 @@ subscription OnUpdateContact($filter: ModelSubscriptionContactFilterInput) {
         dateCreated
         productCategory
         contactId
+        productImageS3Key
         createdAt
         updatedAt
       }
@@ -122,6 +127,7 @@ subscription OnDeleteContact($filter: ModelSubscriptionContactFilterInput) {
         dateCreated
         productCategory
         contactId
+        productImageS3Key
         createdAt
         updatedAt
       }

@@ -1,0 +1,18 @@
+{
+  "resourceName": "buystuffstorage",
+  "policyUUID": "ed585e7d",
+  "bucketName": "buystuff786e5c2b9ca342bf94ab6d68efc97828",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

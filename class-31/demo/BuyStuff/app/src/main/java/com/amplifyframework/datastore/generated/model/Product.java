@@ -33,12 +33,14 @@ public final class Product implements Model {
   public static final QueryField DATE_CREATED = field("Product", "dateCreated");
   public static final QueryField PRODUCT_CATEGORY = field("Product", "productCategory");
   public static final QueryField CONTACT_PERSON = field("Product", "contactId");
+  public static final QueryField PRODUCT_IMAGE_S3_KEY = field("Product", "productImageS3Key");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String name;
   private final @ModelField(targetType="String") String description;
   private final @ModelField(targetType="AWSDateTime") Temporal.DateTime dateCreated;
   private final @ModelField(targetType="ProductCategoryEnum") ProductCategoryEnum productCategory;
   private final @ModelField(targetType="Contact") @BelongsTo(targetName = "contactId", targetNames = {"contactId"}, type = Contact.class) Contact contactPerson;
+  private final @ModelField(targetType="String") String productImageS3Key;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -69,6 +71,10 @@ public final class Product implements Model {
       return contactPerson;
   }
   
+  public String getProductImageS3Key() {
+      return productImageS3Key;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -77,13 +83,14 @@ public final class Product implements Model {
       return updatedAt;
   }
   
-  private Product(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory, Contact contactPerson) {
+  private Product(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory, Contact contactPerson, String productImageS3Key) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.dateCreated = dateCreated;
     this.productCategory = productCategory;
     this.contactPerson = contactPerson;
+    this.productImageS3Key = productImageS3Key;
   }
   
   @Override
@@ -100,6 +107,7 @@ public final class Product implements Model {
               ObjectsCompat.equals(getDateCreated(), product.getDateCreated()) &&
               ObjectsCompat.equals(getProductCategory(), product.getProductCategory()) &&
               ObjectsCompat.equals(getContactPerson(), product.getContactPerson()) &&
+              ObjectsCompat.equals(getProductImageS3Key(), product.getProductImageS3Key()) &&
               ObjectsCompat.equals(getCreatedAt(), product.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), product.getUpdatedAt());
       }
@@ -114,6 +122,7 @@ public final class Product implements Model {
       .append(getDateCreated())
       .append(getProductCategory())
       .append(getContactPerson())
+      .append(getProductImageS3Key())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -130,6 +139,7 @@ public final class Product implements Model {
       .append("dateCreated=" + String.valueOf(getDateCreated()) + ", ")
       .append("productCategory=" + String.valueOf(getProductCategory()) + ", ")
       .append("contactPerson=" + String.valueOf(getContactPerson()) + ", ")
+      .append("productImageS3Key=" + String.valueOf(getProductImageS3Key()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -155,6 +165,7 @@ public final class Product implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -165,7 +176,8 @@ public final class Product implements Model {
       description,
       dateCreated,
       productCategory,
-      contactPerson);
+      contactPerson,
+      productImageS3Key);
   }
   public interface NameStep {
     BuildStep name(String name);
@@ -179,6 +191,7 @@ public final class Product implements Model {
     BuildStep dateCreated(Temporal.DateTime dateCreated);
     BuildStep productCategory(ProductCategoryEnum productCategory);
     BuildStep contactPerson(Contact contactPerson);
+    BuildStep productImageS3Key(String productImageS3Key);
   }
   
 
@@ -189,6 +202,7 @@ public final class Product implements Model {
     private Temporal.DateTime dateCreated;
     private ProductCategoryEnum productCategory;
     private Contact contactPerson;
+    private String productImageS3Key;
     @Override
      public Product build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -199,7 +213,8 @@ public final class Product implements Model {
           description,
           dateCreated,
           productCategory,
-          contactPerson);
+          contactPerson,
+          productImageS3Key);
     }
     
     @Override
@@ -233,6 +248,12 @@ public final class Product implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep productImageS3Key(String productImageS3Key) {
+        this.productImageS3Key = productImageS3Key;
+        return this;
+    }
+    
     /**
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -245,13 +266,14 @@ public final class Product implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory, Contact contactPerson) {
+    private CopyOfBuilder(String id, String name, String description, Temporal.DateTime dateCreated, ProductCategoryEnum productCategory, Contact contactPerson, String productImageS3Key) {
       super.id(id);
       super.name(name)
         .description(description)
         .dateCreated(dateCreated)
         .productCategory(productCategory)
-        .contactPerson(contactPerson);
+        .contactPerson(contactPerson)
+        .productImageS3Key(productImageS3Key);
     }
     
     @Override
@@ -277,6 +299,11 @@ public final class Product implements Model {
     @Override
      public CopyOfBuilder contactPerson(Contact contactPerson) {
       return (CopyOfBuilder) super.contactPerson(contactPerson);
+    }
+    
+    @Override
+     public CopyOfBuilder productImageS3Key(String productImageS3Key) {
+      return (CopyOfBuilder) super.productImageS3Key(productImageS3Key);
     }
   }
   

@@ -25,13 +25,13 @@
     android:layout_width="wrap_content"
     android:layout_height="48dp"
     android:layout_marginStart="24dp"
-    android:layout_marginTop="40dp"
+    android:layout_marginTop="24dp"
     android:gravity="center_vertical"
     android:text="@string/product_name"
     android:textColor="#000000"
     android:textSize="16sp"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityTitleTextView" />
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityProductImageView" />
 
   <EditText
     android:id="@+id/AddProductActivityProductNameEditText"
@@ -110,4 +110,16 @@
     app:layout_constraintBottom_toBottomOf="@+id/AddProductActivityDescriptionTextView"
     app:layout_constraintStart_toEndOf="@+id/AddProductActivityDescriptionTextView"
     app:layout_constraintTop_toTopOf="@+id/AddProductActivityDescriptionTextView" />
+
+  <ImageView
+    android:id="@+id/AddProductActivityProductImageView"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:layout_marginTop="24dp"
+    android:contentDescription="@string/add_product_image"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/AddProductActivityTitleTextView"
+    app:srcCompat="@drawable/ic_launcher_background" />
 </androidx.constraintlayout.widget.ConstraintLayout>

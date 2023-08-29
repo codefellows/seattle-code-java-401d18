@@ -17,6 +17,7 @@ type Product @model @auth(rules: [{allow: public}]) {
   productCategory: ProductCategoryEnum
   contactId: ID! @index(name: "byContact", sortKeyFields: ["name"])
   contactPerson: Contact @belongsTo(fields: ["contactId"])
+  productImageS3Key: String
 }
 
 enum ProductCategoryEnum {

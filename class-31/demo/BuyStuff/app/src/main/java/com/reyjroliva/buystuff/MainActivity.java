@@ -34,12 +34,17 @@ import com.reyjroliva.buystuff.activities.OrderFormActivity;
 import com.reyjroliva.buystuff.activities.UserProfileActivity;
 import com.reyjroliva.buystuff.adapters.ProductListRecyclerViewAdapter;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
   private final String TAG = "MainActivity";
   public static final String PRODUCT_NAME_EXTRA_TAG = "productName"; // at top of class for sharing, public to access from other classes
+  public static final String PRODUCT_ID_EXTRA_TAG = "productId";
 
   List<Product> products;
   ProductListRecyclerViewAdapter adapter;
@@ -57,23 +62,6 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    //// Set the user's username based on their nickname saved in the Cognito user pool
-    //Amplify.Auth.fetchUserAttributes(
-    //  success -> {
-    //    for(AuthUserAttribute userAttribute : success) {
-    //      if(userAttribute.getKey().getKeyString().equals("nickname")) {
-    //        String userNickname = userAttribute.getValue();
-    //        runOnUiThread(() -> {
-    //          // update a textView with the nickname
-    //        });
-    //      }
-    //    }
-    //  },
-    //  failure -> {
-    //
-    //  }
-    //);
-
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
     products = new ArrayList<>();
 
@@ -84,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     settingsButton = findViewById(R.id.MainActivitySettingsButton);
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
-    //createContactInstances();
+    //manualS3FileUpload();
     setupAddProductButton();
     setupOrderFormButton();
     updateProductListFromDatabase();
@@ -129,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Read products succcessfully!");
         products.clear();
         for(Product databaseProduct : success.getData()) {
-          // only addd the products whose contact is "Rey Oliva"
+          // only add the products whose contact is "Rey Oliva"
           String contactName = "Rey Oliva"; // in lab, you'll need to get this from your settings page selection (SharedPref!)
           if(databaseProduct.getContactPerson() != null
           && databaseProduct.getContactPerson().getFullName().equals(contactName)) {
@@ -198,6 +186,36 @@ public class MainActivity extends AppCompatActivity {
       ModelMutation.create(contact2),
       successResponse -> Log.i(TAG, "MainActivity.createContactInstances(): made a contact successfully"),
       failureResponse -> Log.i(TAG, "MainActivity.createContactInstances(): contact failed with this response: " + failureResponse)
+    );
+  }
+
+  void manualS3FileUpload() {
+    // create a test file to be saved to S3
+    String testFilename = "testFilename";
+    File testFile = new File(getApplicationContext().getFilesDir(), testFilename);
+
+    // write to test file with BufferedWriter
+    try {
+      BufferedWriter testFileBufferedWriter = new BufferedWriter(new FileWriter(testFile));
+      testFileBufferedWriter.append("some test text here\nAnother line of test text");
+      testFileBufferedWriter.close(); // Makes sure you do this or your text may not be saved
+    } catch(IOException ioe) {
+      Log.e(TAG, "Could not write file locally with filename: " + testFilename);
+    }
+
+    // create an S3 key
+    String testFileS3Key = "someFileOnS3.txt";
+
+    // call Storage.uploadFile
+    Amplify.Storage.uploadFile(
+      testFileS3Key,
+      testFile,
+      success -> {
+        Log.i(TAG, "S3 uploaded successfully! Key is: " + success.getKey());
+      },
+      failure -> {
+        Log.i(TAG, "S3 upload failed! " + failure.getMessage());
+      }
     );
   }
 }
