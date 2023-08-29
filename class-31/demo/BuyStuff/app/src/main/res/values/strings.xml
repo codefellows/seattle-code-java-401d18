@@ -25,4 +25,6 @@
   <string name="verification_number">Verifiation Code</string>
   <string name="login">Login</string>
   <string name="logout">Logout</string>
+    <string name="add_product_image">Product Image</string>
+  <string name="product_image">Image for product being viewed</string>
 </resources>
