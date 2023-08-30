@@ -69,6 +69,7 @@ public class OrderFormActivity extends AppCompatActivity {
 
   void populateImageView() {
     // truncate folder name from product's s3key
+    currentProduct.getProductImageS3Key();
     if(currentProduct.getProductImageS3Key() != null) {
       int cut = currentProduct.getProductImageS3Key().lastIndexOf('/');
       if(cut != -1) {
