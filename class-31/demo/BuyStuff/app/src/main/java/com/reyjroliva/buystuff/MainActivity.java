@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     settingsButton = findViewById(R.id.MainActivitySettingsButton);
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
+    // TODO: Class39 Step 2: Request the user's permission for location services
+    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     //manualS3FileUpload();
     setupAddProductButton();
     setupOrderFormButton();

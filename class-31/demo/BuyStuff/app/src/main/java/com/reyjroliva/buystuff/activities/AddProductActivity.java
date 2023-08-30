@@ -4,12 +4,17 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -28,15 +33,25 @@ import com.amplifyframework.core.model.temporal.Temporal;
 import com.amplifyframework.datastore.generated.model.Contact;
 import com.amplifyframework.datastore.generated.model.Product;
 import com.amplifyframework.datastore.generated.model.ProductCategoryEnum;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.reyjroliva.buystuff.MainActivity;
 import com.reyjroliva.buystuff.R;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -44,6 +59,9 @@ import io.reactivex.rxjava3.core.Completable;
 
 public class AddProductActivity extends AppCompatActivity {
   private final String TAG = "AddProductActivity";
+  // TODO: Class39 Step 3-1: Add fused location provider client as a class level variable
+  private FusedLocationProviderClient fusedLocationProviderClient;
+  private Geocoder geocoder;
   private String s3ImageKey = ""; // holds the image S3 key if one currently exists in this activity, or the empty String if there is no image picked in this activity currently
 
   ActivityResultLauncher<Intent> activityResultLauncher;
@@ -63,6 +81,9 @@ public class AddProductActivity extends AppCompatActivity {
 
     activityResultLauncher = getImagePickingActivityResultLauncher();
     contactsFuture = new CompletableFuture<>();
+    // TODO: Class39 Step 3-2: Set the value of fusedLocationProviderClient
+    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+    geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
     productCategorySpinner = findViewById(R.id.AddProductActivityCategorySpinner);
     productContactSpinner = findViewById(R.id.AddProductActivityContactSpinner);
@@ -71,6 +92,7 @@ public class AddProductActivity extends AppCompatActivity {
     productNameEditText = findViewById(R.id.AddProductActivityProductNameEditText);
     saveButton = findViewById(R.id.AddProductActivitySaveButton);
 
+    startTrackingUserLocation();
     setupProductImageView();
     setupProductCategorySpinner();
     setupProductContactSpinner();
@@ -79,7 +101,7 @@ public class AddProductActivity extends AppCompatActivity {
 
   void setupProductImageView() {
     productImageView.setOnClickListener(v -> {
-       launchImageSelectionIntent();
+      launchImageSelectionIntent();
     });
   }
 
@@ -93,6 +115,11 @@ public class AddProductActivity extends AppCompatActivity {
 
   void setupSaveButton() {
     saveButton.setOnClickListener(v -> {
+      //TODO: Class39 Step 4: Grab the current user's location when they select save
+      getUserLastLocation();
+      // Grab user's current location
+      //getUserCurrentLocation();
+
       String selectedContactString = productContactSpinner.getSelectedItem().toString();
 
       List<Contact> contacts = null;
@@ -109,13 +136,13 @@ public class AddProductActivity extends AppCompatActivity {
 
       // Part 4: update/save out product object with the image key
       Product productToSave = Product.builder()
-          .name(productNameEditText.getText().toString())
-          .description(productDescriptionEditText.getText().toString())
-          .dateCreated(new Temporal.DateTime(new Date(), 0))
-          .productCategory((ProductCategoryEnum) productCategorySpinner.getSelectedItem())
-          .contactPerson(selectedContact)
-          .productImageS3Key(s3ImageKey)
-          .build();
+        .name(productNameEditText.getText().toString())
+        .description(productDescriptionEditText.getText().toString())
+        .dateCreated(new Temporal.DateTime(new Date(), 0))
+        .productCategory((ProductCategoryEnum) productCategorySpinner.getSelectedItem())
+        .contactPerson(selectedContact)
+        .productImageS3Key(s3ImageKey)
+        .build();
 
       Amplify.API.mutate(
         ModelMutation.create(productToSave), // making a GraphQL request to cloud
@@ -124,6 +151,111 @@ public class AddProductActivity extends AppCompatActivity {
       );
 
       Snackbar.make(findViewById(R.id.AddProductActivityView), "Product saved!", Snackbar.LENGTH_SHORT).show();
+    });
+  }
+
+  void startTrackingUserLocation() {
+    LocationRequest locationRequest = new LocationRequest.Builder(
+      Priority.PRIORITY_HIGH_ACCURACY,
+      5000)
+      .build();
+
+    LocationCallback locationCallback = new LocationCallback() {
+      @Override
+      public void onLocationResult(@NonNull LocationResult locationResult) {
+        super.onLocationResult(locationResult);
+
+        try {
+          String address = geocoder.getFromLocation(
+              locationResult.getLastLocation().getLatitude(),
+              locationResult.getLastLocation().getLongitude(),
+              1) // give us only the best guess
+            .get(0) // grab the best guess from the list of Addresses
+            .getAddressLine(0); // get the first line String from the Address object
+
+          Log.i(TAG, "Repeating current location is: " + address);
+        } catch (IOException ioe) {
+          Log.e(TAG, "Could not get subscribed location: " + ioe.getMessage(), ioe);
+        }
+      }
+    };
+
+    // checking for permissions before accessing location
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      // TODO: Consider calling
+      //    ActivityCompat#requestPermissions
+      // here to request the missing permissions, and then overriding
+      //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+      //                                          int[] grantResults)
+      // to handle the case where the user grants the permission. See the documentation
+      // for ActivityCompat#requestPermissions for more details.
+      return;
+    }
+
+    fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
+  }
+
+  void getUserLastLocation() {
+    // TODO: Class39 Step 4-2: Ensure you have permission to access location before doing so
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      // TODO: Consider calling
+      //    ActivityCompat#requestPermissions
+      // here to request the missing permissions, and then overriding
+      //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+      //                                          int[] grantResults)
+      // to handle the case where the user grants the permission. See the documentation
+      // for ActivityCompat#requestPermissions for more details.
+      return;
+    }
+
+    //TODO: Class39 Step 4-1 Implementation: Grab the current user's location when they select save
+    fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
+      if (location == null) {
+        Log.e(TAG, "Location callback was null");
+      }
+      String currentLatitude = Double.toString(location.getLatitude());
+      String currentLongitude = Double.toString(location.getLongitude());
+      Log.i(TAG, "User's last latitude: " + currentLatitude);
+      Log.i(TAG, "User's last longitude: " + currentLongitude);
+      // For Lab39: Save these vars to be included as part of your Task object
+    });
+  }
+
+  void getUserCurrentLocation() {
+    fusedLocationProviderClient.flushLocations(); // <-- call this is you're not seeing location changes
+
+    // Make sure you have permissions before accessing a user's location!
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      // TODO: Consider calling
+      //    ActivityCompat#requestPermissions
+      // here to request the missing permissions, and then overriding
+      //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+      //                                          int[] grantResults)
+      // to handle the case where the user grants the permission. See the documentation
+      // for ActivityCompat#requestPermissions for more details.
+      return;
+    }
+
+    // grab the user's current location
+    fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, new CancellationToken() {
+      @NonNull
+      @Override
+      public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+        return null;
+      }
+
+      @Override
+      public boolean isCancellationRequested() {
+        return false;
+      }
+    }).addOnSuccessListener(location -> {
+      if (location == null) {
+        Log.e(TAG, "Location callback was null");
+      }
+      String currentLatitude = Double.toString(location.getLatitude());
+      String currentLongitude = Double.toString(location.getLongitude());
+      Log.i(TAG, "User's current latitude: " + currentLatitude);
+      Log.i(TAG, "User's current longitude: " + currentLongitude);
     });
   }
 

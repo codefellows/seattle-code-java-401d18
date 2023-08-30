@@ -3,6 +3,9 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+  <!-- TODO: Class39 Step 1: Add location permissions to application -->
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
   <application
     android:name=".BuyStuffAmplifyApplication"
