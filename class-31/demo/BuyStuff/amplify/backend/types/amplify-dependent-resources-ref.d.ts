@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+  "analytics": {
+    "buystuff": {
+      "Id": "string",
+      "Region": "string",
+      "appName": "string"
+    }
+  },
   "api": {
     "buystuff": {
       "GraphQLAPIEndpointOutput": "string",
@@ -15,6 +22,13 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
+    }
+  },
+  "predictions": {
+    "speechGenerator43bafe31": {
+      "language": "string",
+      "region": "string",
+      "voice": "string"
     }
   },
   "storage": {

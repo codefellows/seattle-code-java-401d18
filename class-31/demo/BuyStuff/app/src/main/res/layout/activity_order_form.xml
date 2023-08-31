@@ -41,4 +41,14 @@
     app:layout_constraintTop_toBottomOf="@+id/OrderFormActivity"
     app:srcCompat="@drawable/ic_launcher_background"
     tools:ignore="ImageContrastCheck" />
+
+  <Button
+    android:id="@+id/OrderFormActivityAnnounceProductNameButton"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    android:layout_marginTop="8dp"
+    android:contentDescription="@string/announce_description"
+    android:text="@string/announce"
+    app:layout_constraintStart_toStartOf="@+id/OrderFormProductNameTextView"
+    app:layout_constraintTop_toBottomOf="@+id/OrderFormProductNameTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,4 +27,6 @@
   <string name="logout">Logout</string>
     <string name="add_product_image">Product Image</string>
   <string name="product_image">Image for product being viewed</string>
+    <string name="announce">Announce</string>
+  <string name="announce_description">Announce name of the product being viewed</string>
 </resources>
