@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
     logAppStartup();
-    // TODO: Class39 Step 2: Request the user's permission for location services
     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     //manualS3FileUpload();
     setupAddProductButton();

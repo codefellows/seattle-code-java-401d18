@@ -59,7 +59,6 @@ import io.reactivex.rxjava3.core.Completable;
 
 public class AddProductActivity extends AppCompatActivity {
   private final String TAG = "AddProductActivity";
-  // TODO: Class39 Step 3-1: Add fused location provider client as a class level variable
   private FusedLocationProviderClient fusedLocationProviderClient;
   private Geocoder geocoder;
   private String s3ImageKey = ""; // holds the image S3 key if one currently exists in this activity, or the empty String if there is no image picked in this activity currently
@@ -81,7 +80,6 @@ public class AddProductActivity extends AppCompatActivity {
 
     activityResultLauncher = getImagePickingActivityResultLauncher();
     contactsFuture = new CompletableFuture<>();
-    // TODO: Class39 Step 3-2: Set the value of fusedLocationProviderClient
     fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
     geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
@@ -115,7 +113,6 @@ public class AddProductActivity extends AppCompatActivity {
 
   void setupSaveButton() {
     saveButton.setOnClickListener(v -> {
-      //TODO: Class39 Step 4: Grab the current user's location when they select save
       getUserLastLocation();
       // Grab user's current location
       //getUserCurrentLocation();
@@ -196,7 +193,6 @@ public class AddProductActivity extends AppCompatActivity {
   }
 
   void getUserLastLocation() {
-    // TODO: Class39 Step 4-2: Ensure you have permission to access location before doing so
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
       // TODO: Consider calling
       //    ActivityCompat#requestPermissions
@@ -207,8 +203,7 @@ public class AddProductActivity extends AppCompatActivity {
       // for ActivityCompat#requestPermissions for more details.
       return;
     }
-
-    //TODO: Class39 Step 4-1 Implementation: Grab the current user's location when they select save
+    
     fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
       if (location == null) {
         Log.e(TAG, "Location callback was null");
