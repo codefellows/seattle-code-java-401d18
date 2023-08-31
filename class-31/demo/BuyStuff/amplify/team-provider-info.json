@@ -20,6 +20,12 @@
       },
       "storage": {
         "buystuffstorage": {}
+      },
+      "analytics": {
+        "buystuff": {}
+      },
+      "predictions": {
+        "speechGenerator43bafe31": {}
       }
     }
   }

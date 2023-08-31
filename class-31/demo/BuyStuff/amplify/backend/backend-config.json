@@ -1,4 +1,10 @@
 {
+  "analytics": {
+    "buystuff": {
+      "providerPlugin": "awscloudformation",
+      "service": "Pinpoint"
+    }
+  },
   "api": {
     "buystuff": {
       "dependsOn": [],
@@ -45,6 +51,13 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "predictions": {
+    "speechGenerator43bafe31": {
+      "convertType": "speechGenerator",
+      "providerPlugin": "awscloudformation",
+      "service": "Polly"
     }
   },
   "storage": {

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUserAttribute;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     settingsButton = findViewById(R.id.MainActivitySettingsButton);
     usernameTextView = findViewById(R.id.MainActivityUsernameTextView);
 
+    logAppStartup();
     // TODO: Class39 Step 2: Request the user's permission for location services
     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
     //manualS3FileUpload();
@@ -168,6 +171,16 @@ public class MainActivity extends AppCompatActivity {
   void setupUsernameTextView() {
     String userNickname = preferences.getString(USER_NICKNAME_TAG, "No Nickname");
     usernameTextView.setText(userNickname);
+  }
+
+  void logAppStartup() {
+    AnalyticsEvent event = AnalyticsEvent.builder()
+      .name("openedApp")
+      .addProperty("time", Long.toString(new Date().getTime()))
+      .addProperty("trackingEvent", "main activity opened")
+      .build();
+
+    Amplify.Analytics.recordEvent(event);
   }
 
   void createContactInstances() {

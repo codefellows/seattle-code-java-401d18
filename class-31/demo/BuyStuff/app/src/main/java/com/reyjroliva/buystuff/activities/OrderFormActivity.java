@@ -6,10 +6,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,14 +22,21 @@ import com.reyjroliva.buystuff.MainActivity;
 import com.reyjroliva.buystuff.R;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class OrderFormActivity extends AppCompatActivity {
   private static String TAG = "OrderFormActivity";
+  private final MediaPlayer mp = new MediaPlayer();
 
   Intent callingIntent;
   Product currentProduct;
   String s3ImageKey;
 
+  Button announceButton;
   ImageView productImageView;
   TextView productNameTextView;
 
@@ -38,11 +47,13 @@ public class OrderFormActivity extends AppCompatActivity {
 
     callingIntent = getIntent();
 
+    announceButton = findViewById(R.id.OrderFormActivityAnnounceProductNameButton);
     productImageView = findViewById(R.id.OrderFormActivityProductImageView);
     productNameTextView = findViewById(R.id.OrderFormProductNameTextView);
 
     setupProductImageView();
     setupProductNameTextView();
+    setupAnnounceButton();
   }
 
   void setupProductImageView() {
@@ -101,6 +112,41 @@ public class OrderFormActivity extends AppCompatActivity {
       productNameTextView.setText(productNameString);
     } else {
       productNameTextView.setText(R.string.no_product_name);
+    }
+  }
+
+  void setupAnnounceButton() {
+    announceButton.setOnClickListener(v -> {
+      String productName = productNameTextView.getText().toString();
+      Amplify.Predictions.convertTextToSpeech(
+        productName,
+        result -> playAudio(result.getAudioData()),
+        error -> Log.e(TAG, "Audio conversion of product name text failed", error)
+      );
+    });
+  }
+
+  private void playAudio(InputStream data) {
+    File mp3File = new File(getCacheDir(), "audio.mp3");
+
+    try(OutputStream out = new FileOutputStream(mp3File)) {
+       byte[] buffer = new byte[8 * 1024];
+       int bytesRead;
+
+       while((bytesRead = data.read(buffer)) != -1) {
+         out.write(buffer, 0, bytesRead);
+       }
+
+       Log.i(TAG, "audio file finished reading");
+
+       mp.reset();
+       mp.setOnPreparedListener(MediaPlayer::start);
+       mp.setDataSource(new FileInputStream(mp3File).getFD());
+       mp.prepareAsync();
+
+       Log.i(TAG, "Audio played successfully");
+    } catch (IOException ioe) {
+      Log.e(TAG, "Error writing audio file", ioe);
     }
   }
 
